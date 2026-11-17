@@ -146,8 +146,9 @@ p { text-wrap: pretty; }
     linear-gradient(to bottom, rgb(15 13 11 / 0.55), transparent 28%, transparent 68%, var(--bg) 96%),
     radial-gradient(40rem 30rem at 78% 50%, rgb(243 146 51 / 0.16), transparent 65%); }
 @media (max-width: 48rem) {
-  .hero::before { background: url("../images/bg-hero-kitchen-mobile.jpg") center 70% / cover, var(--bg); }
-  .hero::after { background: linear-gradient(to bottom, rgb(15 13 11 / 0.9) 0%, rgb(15 13 11 / 0.72) 45%, rgb(15 13 11 / 0.35) 70%, var(--bg) 96%); }
+  .hero::before { inset: 0; translate: none; background: url("../images/bg-hero-kitchen-mobile.jpg") center 88% / auto 128% no-repeat, var(--bg); }
+  .hero-copy { text-shadow: 0 2px 14px rgb(0 0 0 / 0.75); }
+  .hero::after { background: linear-gradient(to bottom, rgb(15 13 11 / 0.72) 0%, rgb(15 13 11 / 0.5) 35%, rgb(15 13 11 / 0.42) 60%, rgb(15 13 11 / 0.3) 80%, var(--bg) 99%); }
 }
 .hero-grid { display: grid; gap: var(--s-7); align-items: center; }
 .lede { font-size: var(--fs-lg); color: var(--muted); max-width: 32rem; margin-top: var(--s-5); }
@@ -158,9 +159,9 @@ p { text-wrap: pretty; }
 .pills svg { width: 1.1rem; height: 1.1rem; fill: none; stroke: var(--orange); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 .hero-art { position: relative; width: min(100%, 22rem); margin-inline: auto; aspect-ratio: 1; }
-.hero-art .glow { position: absolute; inset: -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(243 146 51 / 0.42), rgb(216 67 43 / 0.12) 60%, transparent); filter: blur(10px); }
+.hero-art .glow { position: absolute; inset: -12%; border-radius: 50%; background: radial-gradient(closest-side, rgb(243 146 51 / 0.42), rgb(216 67 43 / 0.12) 60%, transparent); }
 .hero-plates { position: absolute; inset: 0; }
-.plate { position: absolute; inset: 0; margin: 0; border-radius: 50%; overflow: hidden; box-shadow: var(--plate-shadow); opacity: 0; transform: rotate(-30deg) scale(0.92); transition: opacity 500ms var(--ease), transform 700ms var(--ease); }
+.plate { position: absolute; inset: 0; margin: 0; border-radius: 50%; overflow: hidden; will-change: opacity, transform; backface-visibility: hidden; box-shadow: var(--plate-shadow); opacity: 0; transform: rotate(-30deg) scale(0.92); transition: opacity 500ms var(--ease), transform 700ms var(--ease); }
 .plate.is-on { opacity: 1; transform: none; }
 .plate img { width: 100%; height: 100%; object-fit: cover; }
 .plate-caption { position: absolute; left: 50%; bottom: -15%; translate: -50% 0; display: grid; justify-items: center; gap: 2px; width: max-content; max-width: 100%; padding: var(--s-2) var(--s-5); border-radius: var(--r-pill); background: rgb(28 24 20 / 0.85); border: 1px solid var(--line-2); text-align: center; line-height: 1.2; }
@@ -463,8 +464,8 @@ input[aria-invalid="true"] { border-color: var(--danger); }
   .hero-plates { animation: plate-in 1100ms var(--ease) 200ms both; }
   .ticker-track { animation: ticker 55s linear infinite; }
   @keyframes ticker { to { transform: translateX(-50%); } }
-  .plate img { animation: spin 120s linear infinite; }
-  .hero-art .glow { animation: pulse 6s ease-in-out infinite; }
+  .plate.is-on img { animation: spin 120s linear infinite; }
+  @media (min-width: 48rem) { .hero-art .glow { animation: pulse 6s ease-in-out infinite; } }
   .spice img { transform-box: fill-box; transform-origin: center; animation: drift 7s ease-in-out infinite; }
   .f2 img, .f5 img, .d2 img { animation-duration: 9s; animation-delay: -3s; }
   .f3 img, .f6 img { animation-duration: 11s; animation-delay: -5s; }

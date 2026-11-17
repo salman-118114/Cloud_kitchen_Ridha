@@ -407,20 +407,44 @@
     if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) swap();
   });
 
-  /* ---------- hero: the plate changes between Malabar dishes ---------- */
-  var heroPlates = document.querySelectorAll("#hero-plates .plate");
+  /* ---------- hero: the plate changes between Malabar dishes ----------
+     All plates are fetched and decoded once the page has loaded, and a plate is only shown
+     when its picture is ready, so the switch never stalls on a half-loaded image. */
+  var heroPlates = [].slice.call(document.querySelectorAll("#hero-plates .plate"));
   var plateName = $("plate-name");
   if (heroPlates.length > 1 && !still) {
+    var ready = heroPlates.map(function (_, i) { return i === 0; });
+    var warm = function () {
+      heroPlates.forEach(function (fig, i) {
+        if (i === 0) return;
+        var img = fig.querySelector("img");
+        img.loading = "eager";
+        var done = function () {
+          // decode ahead of time, but never wait more than a second for it
+          Promise.race([
+            img.decode ? img.decode().catch(function () {}) : Promise.resolve(),
+            new Promise(function (ok) { setTimeout(ok, 1000); })
+          ]).then(function () { if (img.naturalWidth) ready[i] = true; });
+        };
+        if (img.complete && img.naturalWidth) done(); else img.addEventListener("load", done);
+      });
+    };
+    if (document.readyState === "complete") warm(); else window.addEventListener("load", warm);
+
     var current = 0;
     setInterval(function () {
       if (document.hidden) return;
-      heroPlates[current].classList.remove("is-on");
-      current = (current + 1) % heroPlates.length;
-      var next = heroPlates[current];
-      var img = next.querySelector("img");
-      if (img.loading === "lazy") img.loading = "eager";
-      next.classList.add("is-on");
-      if (plateName) plateName.textContent = next.dataset.name;
+      // next plate whose picture is ready; stay on this one if none is
+      for (var step = 1; step < heroPlates.length; step++) {
+        var n = (current + step) % heroPlates.length;
+        if (ready[n]) {
+          heroPlates[current].classList.remove("is-on");
+          heroPlates[n].classList.add("is-on");
+          if (plateName) plateName.textContent = heroPlates[n].dataset.name;
+          current = n;
+          return;
+        }
+      }
     }, 3500);
   }
 
