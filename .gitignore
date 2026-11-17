@@ -1,0 +1,13 @@
+# copy of the site made for drag-and-drop hosting; rebuilt from the files here
+publish/
+
+# full-size original photos (about 80 MB); the site uses the smaller copies in images/
+images/originals/
+
+# local editor / assistant settings
+.claude/
+
+# system files
+Thumbs.db
+desktop.ini
+.DS_Store
