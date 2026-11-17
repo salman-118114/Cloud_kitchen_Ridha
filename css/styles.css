@@ -384,6 +384,26 @@ input[type="range"] { flex: 1; width: 100%; height: 2rem; accent-color: var(--or
 @media (min-width: 60rem) { .order-grid { grid-template-columns: 1.15fr 0.85fr; gap: var(--s-7); } .phone { position: sticky; top: 6rem; } }
 
 form.card { display: grid; gap: var(--s-5); padding: clamp(1.25rem, 3vw, 2.25rem); }
+/* the order form is a light "paper" card so it reads clearly as the form to fill in */
+form.card {
+  color-scheme: light;
+  --cream: #2a1d14; --muted: #66574a; --field: #ffffff;
+  --line: rgb(42 29 20 / 0.12); --line-2: rgb(42 29 20 / 0.24); --danger: #b3261e;
+  --link: #a8461a;
+  background: linear-gradient(180deg, #fffaf2, #f6ead8);
+  color: #2a1d14;
+  border: 2px solid var(--orange);
+  box-shadow: 0 0 0 6px rgb(243 146 51 / 0.14), var(--shadow);
+}
+form.card :focus-visible { outline-color: var(--link); }
+form.card input:focus-visible, form.card textarea:focus-visible { outline-color: var(--orange); background: #fff; }
+form.card .cart-empty a, form.card .help a { color: var(--link); }
+form.card .cart li { background: #fff; }
+form.card ::placeholder { color: #75685a; }
+.form-head { display: grid; gap: var(--s-2); padding-bottom: var(--s-4); border-bottom: 1px dashed var(--line-2); }
+.form-badge { display: inline-flex; align-items: center; gap: var(--s-2); justify-self: start; padding: var(--s-1) var(--s-4) var(--s-1) var(--s-3); border-radius: var(--r-pill); background: var(--orange-ink); color: #ffd9a8; font-size: var(--fs-xs); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+.form-badge svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.form-head p { color: var(--muted); font-size: var(--fs-sm); }
 .field { display: grid; gap: var(--s-2); min-width: 0; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); align-items: start; }
 label, .label, legend { font-size: var(--fs-sm); font-weight: 500; color: var(--cream); }
