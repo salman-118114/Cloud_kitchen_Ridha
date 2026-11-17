@@ -11,3 +11,6 @@ images/originals/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+.vercel
+.env*
